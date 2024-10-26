@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from ..managers import UserManager
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class User(AbstractBaseUser, PermissionsMixin):
     ROL_CHOICES = [
@@ -49,6 +50,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
         ordering = ['first_name', 'last_name']
+
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {'refresh': str(refresh),
+                'access': str(refresh.access_token)
+                }
 
     def __str__(self):
         return f'{self.email} - {self.first_name} {self.last_name}'

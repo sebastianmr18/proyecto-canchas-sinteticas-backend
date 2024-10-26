@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 import environ
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
@@ -28,6 +29,7 @@ INSTALLED_APPS = [
     'app',
     'rest_framework',
     'corsheaders',
+    'djoser'
 ]
 
 AUTH_USER_MODEL = 'app.User'
@@ -120,3 +122,40 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
+
+# REST FRAMEWORK Settings
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+}
+
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=90),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": False,
+
+    "USER_ID_FIELD": "email",
+    "TOKEN_OBTAIN_SERIALIZER": "app.serializers.token_serializer.TokenObtainPairSerializer",
+}
+
+# Djoser config
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'app.serializers.user_serializer.UserRegisterSerializer',
+        'current_user': 'app.serializers.user_serializer.UserSerializer',
+        'user': 'app.serializers.user_serializer.UserSerializer',
+    },
+    'SEND_ACTIVATION_EMAIL': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': False,
+    'ACTIVATION_URL': 'auth/users/activation/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'auth/reset-password/?uid={uid}&token={token}',
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

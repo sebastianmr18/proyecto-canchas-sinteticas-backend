@@ -5,11 +5,8 @@ from ..models.reservation_model import Reservation
 from ..models.review_model import Review
 from ..models.payment_model import Payment
 from ..serializers.serializers import CourtSerializer, ReservationSerializer, PaymentSerializer, ReviewSerializer
-from ..serializers.user_serializer import UserSerializer
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+
 
 class CourtViewSet(viewsets.ModelViewSet):
     queryset = Court.objects.all()
