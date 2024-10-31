@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from ..managers import UserManager
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.core.validators import RegexValidator
 
 class User(AbstractBaseUser, PermissionsMixin):
     ROL_CHOICES = [
@@ -26,8 +27,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         'Segundo Apellido', max_length=30, blank=True, null=True)
     
     contact_number = models.CharField(
-        'Teléfono de Contacto', max_length=15, blank=True, null=True)
-
+        max_length=15,
+        validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$')],
+        blank=True, null=True
+    )
     address = models.CharField(
         'Dirección', max_length=100, blank=True, null=True)
     
@@ -40,6 +43,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField('Usuario parte del Staff', default=False)    
 
     is_superuser = models.BooleanField('Superusuario', default=False)
+    
+    profile_picture = models.ImageField(upload_to='profile_picture/', blank=True, null=True)
 
     objects = UserManager()
 
