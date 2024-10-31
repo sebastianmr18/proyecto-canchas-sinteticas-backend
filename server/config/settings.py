@@ -1,18 +1,23 @@
 from pathlib import Path
 import os
-import environ
+#import environ
+from decouple import config
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env()
-environ.Env.read_env()
+#env = environ.Env()
+#environ.Env.read_env()
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = os.environ.get('DEBUG')
+DEBUG = config('DEBUG')
+
+#SECRET_KEY = os.environ.get('SECRET_KEY')
+
+#DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -121,7 +126,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
+CORS_ALLOWED_ORIGINS = []
+
+if DEBUG:
+    CORS_ALLOWED_ORIGINS.append(config('FRONTEND_LOCAL_URL'))
 
 # REST FRAMEWORK Settings
 REST_FRAMEWORK = {
