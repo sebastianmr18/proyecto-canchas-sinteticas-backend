@@ -56,11 +56,47 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = 'Usuarios'
         ordering = ['first_name', 'last_name']
 
-    def tokens(self):
-        refresh = RefreshToken.for_user(self)
-        return {'refresh': str(refresh),
-                'access': str(refresh.access_token)
-                }
-
     def __str__(self):
         return f'{self.email} - {self.first_name} {self.last_name}'
+    
+    def get_email(self):
+        return self.email
+    
+    def get_user_id(self):
+        return self.user_id
+    
+    def get_first_name(self):
+        return self.first_name
+    
+    def get_middle_name(self):
+        return self.middle_name
+    
+    def get_last_name(self):
+        return self.last_name
+    
+    def get_second_last_name(self):
+        return self.second_last_name
+    
+    def get_contact_number(self):
+        return self.contact_number
+    
+    def get_address(self):
+        return self.address
+    
+    def get_rol(self):
+        return self.rol
+    
+    def get_date_register(self):
+        return self.date_register
+    
+    def get_is_active(self):
+        return self.is_active
+    
+    def get_is_staff(self):
+        return self.is_staff
+    
+    def get_is_superuser(self):
+        return self.is_superuser
+    
+    def get_profile_picture(self):
+        return self.profile_picture
