@@ -4,3 +4,7 @@ from .court_model import Court
 from .reservation_model import Reservation
 from .review_model import Review
 from .payment_model import Payment
+from .notification_model import Notification
+from .promotion_model import Promotion
+from .coupon_model import Coupon
+from .reservation_history_model import ReservationHistory

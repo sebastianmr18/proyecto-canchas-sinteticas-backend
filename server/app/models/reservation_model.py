@@ -16,10 +16,11 @@ class Reservation(models.Model):
     start_datetime = models.DateTimeField()
     duration_hours = models.IntegerField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Confirmado')
+    is_notified = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Reservación'
         verbose_name_plural = 'Reservaciones'
 
     def __str__(self):
-        return f'Reservación {self.reservation_id} - {self.user.first_name} {self.user.last_name}'
+        return f'Reservación {self.reservation_id} - {self.user.first_name} {self.user.last_name} ({self.email}) en {self.court.location}'
