@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 from .models.user_model import User
 from .models.admin_model import Admin
 from .models.court_model import Court
