@@ -34,13 +34,13 @@ def test_user_get_date_register(test_user):
     assert test_user.get_date_register().date() == date(2022, 1, 1)
 
 def test_user_get_is_active(test_user):
-    assert test_user.get_is_active() == True
+    assert test_user.get_is_active()
 
 def test_user_get_is_staff(test_user):
-    assert test_user.get_is_staff() == False
+    assert not test_user.get_is_staff()
 
 def test_user_get_is_superuser(test_user):
-    assert test_user.get_is_superuser() == False
+    assert not test_user.get_is_superuser()
 
 def test_user_get_profile_picture(test_user):
     assert test_user.get_profile_picture() == 'test.jpg'
