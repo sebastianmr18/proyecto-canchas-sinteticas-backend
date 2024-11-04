@@ -4,8 +4,10 @@ from ..models.court_model import Court
 from ..models.reservation_model import Reservation
 from ..models.review_model import Review
 from ..models.payment_model import Payment
-from ..serializers.serializers import CourtSerializer, ReservationSerializer, PaymentSerializer, ReviewSerializer
-
+from ..models.coupon_model import Coupon
+from ..models.notification_model import Notification
+from ..models.reservation_history_model import ReservationHistory
+from ..serializers.serializers import CourtSerializer, ReservationSerializer, PaymentSerializer, ReviewSerializer, NotificationSerializer, ReservationHistorySerializer, CouponSerializer
 
 
 class CourtViewSet(viewsets.ModelViewSet):
@@ -23,3 +25,15 @@ class PaymentViewSet(viewsets.ModelViewSet):
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+
+class NotificationViewSet(viewsets.ModelViewSet):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
+
+class ReservationHistoryViewSet(viewsets.ModelViewSet):
+    queryset = ReservationHistory.objects.all()
+    serializer_class = ReservationHistorySerializer
+
+class CouponViewSet(viewsets.ModelViewSet):
+    queryset = Coupon.objects.all()
+    serializer_class = CouponSerializer

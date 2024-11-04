@@ -11,9 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #env = environ.Env()
 #environ.Env.read_env()
 
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY', default='secret')
 
-DEBUG = config('DEBUG')
+DEBUG = config('DEBUG', default=False)
 
 #SECRET_KEY = os.environ.get('SECRET_KEY')
 
@@ -129,7 +129,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = []
 
 if DEBUG:
-    CORS_ALLOWED_ORIGINS.append(config('FRONTEND_LOCAL_URL'))
+    CORS_ALLOWED_ORIGINS.append(config('FRONTEND_LOCAL_URL', default='http://localhost:3000'))
 
 # REST FRAMEWORK Settings
 REST_FRAMEWORK = {
