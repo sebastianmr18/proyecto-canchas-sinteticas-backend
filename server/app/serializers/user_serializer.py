@@ -27,7 +27,6 @@ class UserRegisterSerializer(UserCreateSerializer):
             last_name=validated_data['last_name'],
         )
 
-        token = user.tokens()
         user.set_password(validated_data['password'])
         user.save()
         return user        
