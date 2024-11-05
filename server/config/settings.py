@@ -131,10 +131,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = []
-
-if DEBUG:
-    CORS_ALLOWED_ORIGINS.append(config('FRONTEND_LOCAL_URL', default='http://localhost:3000'))
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
 
 # REST FRAMEWORK Settings
 REST_FRAMEWORK = {
