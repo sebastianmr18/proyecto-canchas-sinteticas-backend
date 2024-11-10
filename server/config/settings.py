@@ -18,8 +18,7 @@ DEBUG = config('DEBUG', default=False)
 
 #DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', config('FRONTEND_PROD_URL', default='localhost')]
 
 # Application definition
 
@@ -133,6 +132,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    config('FRONTEND_PROD_URL', default='localhost')
 ]
 
 # REST FRAMEWORK Settings
