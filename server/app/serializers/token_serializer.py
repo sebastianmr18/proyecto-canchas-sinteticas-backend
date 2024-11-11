@@ -1,18 +1,20 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework import serializers
 
-class TokenObtainPairSerializer(TokenObtainPairSerializer):
-    def get_token(self, user):
-        token = super().get_token(user)
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    user = serializers.SerializerMethodField()
 
-        token['email'] = user.email
-        token['first_name'] = user.first_name
-        token['last_name'] = user.last_name
-        
-        if user.is_superuser:
-            token['user_type'] = 'superuser'
-        elif user.is_staff:
-            token['user_type'] = 'staff'
-        else:
-            token['user_type'] = 'client'
 
-        return token
+    def get_user(self, obj):
+        user = obj.user
+        return {
+            'user_id': user.user_id,
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+        }
+    
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data['user'] = self.get_user(self)  # Añadir la información del usuario al token
+        return data    

@@ -153,12 +153,13 @@ SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": False,
 
     "USER_ID_FIELD": "email",
-    "TOKEN_OBTAIN_SERIALIZER": "app.serializers.token_serializer.TokenObtainPairSerializer",
+    "TOKEN_OBTAIN_SERIALIZER": 'app.serializers.token_serializer.CustomTokenObtainPairSerializer',
 }
 
 # Djoser config
 DJOSER = {
     'SERIALIZERS': {
+        'token': 'app.serializers.token_serializer.CustomTokenSerializer',
         'user_create': 'app.serializers.user_serializer.UserRegisterSerializer',
         'current_user': 'app.serializers.user_serializer.UserSerializer',
         'user': 'app.serializers.user_serializer.UserSerializer',
