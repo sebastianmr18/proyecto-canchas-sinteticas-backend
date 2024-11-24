@@ -1,18 +1,22 @@
 from rest_framework import viewsets
 from ..models.user_model import User
-from ..models.court_model import Court
+from ..models.court_model import Court, CourtImage
 from ..models.reservation_model import Reservation
 from ..models.review_model import Review
 from ..models.payment_model import Payment
 from ..models.coupon_model import Coupon
 from ..models.notification_model import Notification
 from ..models.reservation_history_model import ReservationHistory
-from ..serializers.serializers import CourtSerializer, ReservationSerializer, PaymentSerializer, ReviewSerializer, NotificationSerializer, ReservationHistorySerializer, CouponSerializer
+from ..serializers.serializers import CourtSerializer, CourtImageSerializer, ReservationSerializer, PaymentSerializer, ReviewSerializer, NotificationSerializer, ReservationHistorySerializer, CouponSerializer
 
 
 class CourtViewSet(viewsets.ModelViewSet):
     queryset = Court.objects.all()
     serializer_class = CourtSerializer
+
+class CourtImageViewSet(viewsets.ModelViewSet):
+    queryset = CourtImage.objects.all()
+    serializer_class = CourtImageSerializer
 
 class ReservationViewSet(viewsets.ModelViewSet):
     queryset = Reservation.objects.all()
