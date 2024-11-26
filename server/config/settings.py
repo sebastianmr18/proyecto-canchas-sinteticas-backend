@@ -16,7 +16,7 @@ DEBUG = config('DEBUG', default=False)
 MEDIA_URL = '/media/' 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', config('FRONTEND_PROD_URL', default='localhost'), config('BACKEND_PROD_URL', default='localhost')]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0',config('BACKEND_PROD_URL', default='localhost')]
 
 # Application definition
 
@@ -130,7 +130,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    config('FRONTEND_PROD_URL', default='localhost')
+    config('FRONTEND_DEV_URL', default='localhost'),
+    config('FRONTEND_PROD_URL', default='localhost'),
 ]
 
 # REST FRAMEWORK Settings
