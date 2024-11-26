@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models.court_model import Court
+from ..models.court_model import Court, CourtImage
 from ..models.reservation_model import Reservation
 from ..models.review_model import Review
 from ..models.payment_model import Payment
@@ -11,6 +11,11 @@ from ..models.reservation_history_model import ReservationHistory
 class CourtSerializer(serializers.ModelSerializer):
     class Meta:
         model = Court
+        fields = '__all__'
+
+class CourtImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CourtImage
         fields = '__all__'
 
 class ReservationSerializer(serializers.ModelSerializer):

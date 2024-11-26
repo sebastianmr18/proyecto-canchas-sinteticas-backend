@@ -2,21 +2,19 @@ from pathlib import Path
 from decouple import config
 from datetime import timedelta
 import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-#env = environ.Env()
-#environ.Env.read_env()
-
 SECRET_KEY = config('SECRET_KEY', default='secret')
 
 DEBUG = config('DEBUG', default=False)
 
-#SECRET_KEY = os.environ.get('SECRET_KEY')
-
-#DEBUG = os.environ.get('DEBUG')
+# Configuración de Media 
+MEDIA_URL = '/media/' 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', config('FRONTEND_PROD_URL', default='localhost')]
 
