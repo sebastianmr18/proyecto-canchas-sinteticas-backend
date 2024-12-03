@@ -10,7 +10,7 @@ class Payment(models.Model):
 
     PAYMENT_METHOD_CHOICES = [
         ('tarjeta', 'Tarjeta'),
-        ('paypal', 'PayPal'),
+        ('efectivo', 'Efectivo'),
         ('otro', 'Otro'),
     ]
     
