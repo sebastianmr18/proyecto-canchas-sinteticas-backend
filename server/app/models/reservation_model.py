@@ -23,4 +23,4 @@ class Reservation(models.Model):
         verbose_name_plural = 'Reservaciones'
 
     def __str__(self):
-        return f'Reservación {self.reservation_id} - {self.user.first_name} {self.user.last_name} ({self.email}) en {self.court.location}'
+        return f'Reservación {self.reservation_id} - {self.user.first_name} {self.user.last_name} ({self.user.email}) en {self.court.location}'
