@@ -8,6 +8,11 @@ from ..models.coupon_model import Coupon
 from ..models.notification_model import Notification
 from ..models.reservation_history_model import ReservationHistory
 from ..serializers.serializers import CourtSerializer, CourtImageSerializer, ReservationSerializer, PaymentSerializer, ReviewSerializer, NotificationSerializer, ReservationHistorySerializer, CouponSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from datetime import timedelta
+from rest_framework.exceptions import ValidationError
 
 
 class CourtViewSet(viewsets.ModelViewSet):
@@ -25,6 +30,27 @@ class ReservationViewSet(viewsets.ModelViewSet):
 class PaymentViewSet(viewsets.ModelViewSet):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
+
+    def create(self, request, *args, **kwargs):        
+        data = request.data        
+
+        payment_method = data.get('payment_method')        
+        
+        if payment_method == 'efectivo':
+            data['payment_status'] = 'Pendiente'
+        
+        elif payment_method == 'tarjeta':
+            data['payment_status'] = 'Exitoso'
+            data['is_confirmed'] = True
+
+        # Serializar y guardar
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        # Retornar la respuesta
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
