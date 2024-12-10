@@ -5,6 +5,7 @@ from .coupon_model import Coupon
 class Payment(models.Model):
     PAYMENT_STATUS_CHOICES = [
         ('Exitoso', 'Exitoso'),
+        ('Pendiente', 'Pendiente'),
         ('Fallido', 'Fallido'),
     ]
 
