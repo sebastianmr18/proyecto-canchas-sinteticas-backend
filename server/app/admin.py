@@ -1,8 +1,7 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 from .models.user_model import User
 from .models.admin_model import Admin
-from .models.court_model import Court
+from .models.court_model import Court, CourtImage
 from .models.reservation_model import Reservation
 from .models.review_model import Review
 from .models.payment_model import Payment
@@ -39,6 +38,11 @@ class CourtAdmin(admin.ModelAdmin):
     )
     readonly_fields = ('court_id',)
     list_per_page = 10
+
+@admin.register(CourtImage)
+class CourtImageAdmin(admin.ModelAdmin):
+    list_display = ('court', 'image')
+    search_fields = ('court',)
 
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):

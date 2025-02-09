@@ -1,21 +1,22 @@
 from pathlib import Path
-import os
-import environ
+from decouple import config
 from datetime import timedelta
+import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env()
-environ.Env.read_env()
+SECRET_KEY = config('SECRET_KEY', default='secret')
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+DEBUG = config('DEBUG', default=False)
 
-DEBUG = os.environ.get('DEBUG')
+# Configuración de Media 
+MEDIA_URL = '/media/' 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0',config('BACKEND_PROD_URL', default='localhost')]
 
 # Application definition
 
@@ -69,6 +70,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
+DATABASES = {
+    'default': dj_database_url.config(default=config("DATABASE_URL"))
+}
+
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -78,7 +85,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
     }
-}
+}'''
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -121,7 +128,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    config('FRONTEND_DEV_URL', default='localhost'),
+    config('FRONTEND_PROD_URL', default='localhost'),
+]
 
 # REST FRAMEWORK Settings
 REST_FRAMEWORK = {
@@ -141,12 +152,13 @@ SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": False,
 
     "USER_ID_FIELD": "email",
-    "TOKEN_OBTAIN_SERIALIZER": "app.serializers.token_serializer.TokenObtainPairSerializer",
+    "TOKEN_OBTAIN_SERIALIZER": 'app.serializers.token_serializer.CustomTokenObtainPairSerializer',
 }
 
 # Djoser config
 DJOSER = {
     'SERIALIZERS': {
+        'token': 'app.serializers.token_serializer.CustomTokenSerializer',
         'user_create': 'app.serializers.user_serializer.UserRegisterSerializer',
         'current_user': 'app.serializers.user_serializer.UserSerializer',
         'user': 'app.serializers.user_serializer.UserSerializer',

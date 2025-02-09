@@ -32,3 +32,11 @@ class Court(models.Model):
 
     def __str__(self):
         return f'Cancha {self.court_id} - {self.name}'
+    
+class CourtImage(models.Model):
+    court = models.ForeignKey(Court, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='court_images/')
+
+    class Meta:
+        verbose_name = 'Imagen de Cancha'
+        verbose_name_plural = 'Imagenes de Canchas'
